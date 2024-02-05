@@ -39,9 +39,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Subscription $subs = null;
-
     #[ORM\OneToMany(targetEntity: PDF::class, mappedBy: 'user')]
     private Collection $pdf;
 
@@ -50,6 +47,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $subscriptionEndAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Subscription $subs = null;
 
     public function __construct()
     {
@@ -162,18 +162,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getSubs(): ?Subscription
-    {
-        return $this->subs;
-    }
-
-    public function setSubs(?Subscription $subs): static
-    {
-        $this->subs = $subs;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, PDF>
      */
@@ -224,6 +212,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSubscriptionEndAt(?\DateTimeInterface $subscriptionEndAt): static
     {
         $this->subscriptionEndAt = $subscriptionEndAt;
+
+        return $this;
+    }
+
+    public function getSubs(): ?Subscription
+    {
+        return $this->subs;
+    }
+
+    public function setSubs(?Subscription $subs): static
+    {
+        $this->subs = $subs;
 
         return $this;
     }
