@@ -68,6 +68,13 @@
         }
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.53"
+        "phpmd/phpmd": "^2.15",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.8",
+        "symfony/browser-kit": "6.3.*",
+        "symfony/css-selector": "6.3.*",
+        "symfony/maker-bundle": "^1.53",
+        "symfony/phpunit-bridge": "^7.0"
     }
 }
