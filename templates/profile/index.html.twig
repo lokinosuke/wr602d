@@ -1,0 +1,12 @@
+{# templates/profile/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <h1>Welcome, {{ username }}!</h1>
+    <p>Your subscription: {{ subscription }}</p>
+    <p>Change your subscription here: </p><p><a href="{{ path('app_home') }}">Subscription</a></p>
+
+{% endblock %}
