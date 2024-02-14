@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Subscription;
 
 class RegistrationController extends AbstractController
 {
@@ -29,6 +30,9 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRoles(['ROLE_USER']);
+
+            $subscription = $entityManager->getRepository(Subscription::class)->findOneBy(['title' => 'Free']);
+            $user->setSubs($subscription);
 
             $entityManager->persist($user);
             $entityManager->flush();
