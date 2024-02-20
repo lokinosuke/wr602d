@@ -1,12 +1,58 @@
-{# templates/profile/index.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Profile{% endblock %}
 
 {% block body %}
-    <h1>Welcome, {{ username }}!</h1>
-    <p>Your subscription: {{ subscription }}</p>
-    <p>Change your subscription here: </p><p><a href="{{ path('app_home') }}">Subscription</a></p>
+    <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h2 class="text-center text-3xl font-extrabold text-gray-900">
+                Profile
+            </h2>
+        </div>
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white p-8 shadow sm:rounded-lg">
+                <p class="mb-4">Welcome, {{ username }}</p>
+                <p class="mb-4">Your subscription: {{ subscription_title }}</p>
+                <p class="mb-4">Number of PDFs generated today: {{ pdf_count_today }}</p>
+                <p class="mb-4">PDF generation limit: {{ pdf_limit }}</p>
+                {% if pdf_limit_exceeded %}
+                    <p class="mt-4 text-sm text-red-600">You have exceeded your PDF generation limit for today. Please upgrade your subscription or try again tomorrow.</p>
+                    {# You can also disable PDF generation functionality here if needed #}
+                {% else %}
+                    <a href="{{ path('app_gotenberg') }}" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate PDF</a>
+                {% endif %}
+                <div id="countdown" class="mt-4 text-sm text-gray-700"></div>
+                <br> {# Add a line break here #}
+                <a href="{{ path('app_home') }}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upgrade your subscription</a>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        // Calculate time remaining until tomorrow
+        function calculateTimeRemaining() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            const timeUntilTomorrow = tomorrow.getTime() - now.getTime();
+            return timeUntilTomorrow;
+        }
+
+        // Update countdown timer
+        function updateCountdown() {
+            const timeRemaining = calculateTimeRemaining();
+            const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = `Time remaining until tomorrow: ${hours}h ${minutes}m ${seconds}s`;
+
+            // Update countdown every second
+            setTimeout(updateCountdown, 1000);
+        }
+
+        // Start countdown when the page loads
+        updateCountdown();
+    </script>
 {% endblock %}

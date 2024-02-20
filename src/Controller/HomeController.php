@@ -13,9 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class HomeController extends AbstractController
 {
-    private $entityManager; // Declare EntityManagerInterface variable
+    private $entityManager;
 
-    // Constructor to inject EntityManagerInterface
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -24,20 +23,18 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(UserInterface $user, SubscriptionRepository $subscriptionRepository, Request $request): Response
     {
-        $username = $user->getFirstname();
         $subscriptions = $subscriptionRepository->findAll();
 
-        // handle form to update user subscription
+        // Handle form to update user subscription
         $form = $this->createForm(SubscriptionType::class, $user);
         $form->handleRequest($request);
 
-        // Corrected the variable name from $entityManager to $this->entityManager
+        // Persist the changes
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'username' => $username,
             'subscriptions' => $subscriptions,
             'form' => $form->createView(),
         ]);

@@ -21,6 +21,20 @@ class PDFRepository extends ServiceEntityRepository
         parent::__construct($registry, PDF::class);
     }
 
+    public function countPdfGeneratedByUserOnDate($userId, $startOfDay, $endOfDay)
+    {
+  
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->where('p.user = :userId')
+            ->andWhere('p.createdAt BETWEEN :startOfDay AND :endOfDay')
+            ->setParameter('userId', $userId)
+            ->setParameter('startOfDay', $startOfDay)
+            ->setParameter('endOfDay', $endOfDay)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return PDF[] Returns an array of PDF objects
 //     */
