@@ -1,73 +1,37 @@
-{# templates/home/index.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Home{% endblock %}
 
-{% block stylesheets %}
-    <style>
-        section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-
-        }
-        .card {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
-            width: 10rem;
-        }
-        .card-container {
-            display: flex;
-            width: 40rem;
-            justify-content: space-around;
-        }
-        .card:hover {
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
-    <h1>Subscriptions</h1>
-    <section>
-        <div class="card-container">
+<div class="min-h-screen bg-gray-100">
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Subscriptions</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for subscription in subscriptions %}
-                <div class="card">
-                    <h2>{{ subscription.title }}</h2>
-                    <p>{{ subscription.description }}</p>
-                    <p>Price: ${{ subscription.price }}</p>
-                    <p>Limits PDF: {{ subscription.limitsPdf }}</p>
-                    {# You can use subscription.media for displaying images #}
-                    <img src="{{ subscription.media }}" alt="{{ subscription.title }}">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ subscription.title }}</h2>
+                    <p class="text-gray-600 mb-4">{{ subscription.description }}</p>
+                    <p class="text-gray-600 mb-4">Price: ${{ subscription.price }}</p>
+                    <p class="text-gray-600 mb-4">Limits PDF: {{ subscription.limitsPdf }}</p>
+                    <img src="{{ subscription.media }}" alt="{{ subscription.title }}" class="w-full h-auto">
                 </div>
+            </div>
             {% endfor %}
         </div>
-        <button id="showForm">Change subscription</button>
-        <div id="subscriptionForm" style="display: none;">
-            {{ form_start(form) }}
-            {{ form_row(form.subs) }}
-            <button type="submit">Create</button>
+        <button id="showForm" class="mt-6 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Change subscription</button>
+        <div id="subscriptionForm" class="mt-6" style="display: none;">
+            {{ form_start(form, {'attr': {'class': 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'}}) }}
+            {{ form_row(form.subs, {'attr': {'class': 'mb-4'}}) }}
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
             {{ form_end(form) }}
         </div>
-    </section>
+    </div>
+</div>
 
-    <script>
-        document.getElementById('showForm').addEventListener('click', function() {
-            document.getElementById('subscriptionForm').style.display = 'block';
-        });
-    </script>
+<script>
+    document.getElementById('showForm').addEventListener('click', function() {
+        document.getElementById('subscriptionForm').style.display = 'block';
+    });
+</script>
 {% endblock %}
-

@@ -3,10 +3,40 @@
 {% block title %}Convertir une URL en PDF{% endblock %}
 
 {% block body %}
-    <h1>Convertir une URL en PDF</h1>
-    <form action="{{ path('app_gotenberg_convert') }}" method="post">
-        <label for="url">Entrez l'URL :</label><br>
-        <input type="text" id="url" name="url" required><br><br>
-        <button type="submit">Convertir en PDF</button>
-    </form>
+<div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Convertir une URL en PDF
+      </h2>
+    </div>
+    {% if pdf_limit_exceeded %}
+        <p class="text-center text-red-600">Vous avez atteint le nombre maximum de PDF de votre abonnement. Veuillez mettre à niveau votre abonnement pour continuer.</p>
+        <div class="mt-4">
+            <a href="{{ path('app_home') }}" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Upgrade your subscription
+            </a>
+        </div>
+    {% else %}
+        <form class="mt-8 space-y-6" action="{{ path('app_gotenberg_convert') }}" method="post">
+          <div class="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label for="url" class="sr-only">Entrez l'URL :</label>
+              <input type="text" id="url" name="url" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Entrez l'URL">
+            </div>
+            <div>
+              <label for="title" class="sr-only">Entrez le titre du pdf:</label>
+              <input type="text" id="title" name="title" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Entrez le titre du pdf">
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Convertir en PDF
+            </button>
+          </div>
+        </form>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
