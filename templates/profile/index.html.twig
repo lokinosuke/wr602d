@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+<div class="min-h-[39rem] rounded-lg flex items-center flex-col justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <h2 class="text-center text-3xl font-extrabold text-gray-900">
+                Profil
+            </h2>
+        </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white p-8 shadow rounded-lg">
+                <p class="mb-4 text-gray-900">Welcome, <span class="font-bold">{{ username }}</span></p>
+                <p class="mb-4 text-gray-900">Your subscription: <span class="font-bold">{{ subscription_title }}</span></p>
+                <p class="mb-4 text-gray-900">Number of PDFs generated today: <span class="font-bold">{{ pdf_count_today }}</span></p>
+                <p class="mb-4 text-gray-900">PDF generation limit: <span class="font-bold">{{ pdf_limit }}</span></p>
+                {% if pdf_limit_exceeded %}
+                    <p class="mt-4 text-sm text-red-600">You have exceeded your PDF generation limit for today. Please upgrade your subscription or try again tomorrow.</p>
+                    {# You can also disable PDF generation functionality here if needed #}
+                {% else %}
+                    <a href="{{ path('app_gotenberg') }}" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate PDF</a>
+                {% endif %}
+                <div id="countdown" class="mt-4 text-sm text-gray-700"></div>
+                <br> {# Add a line break here #}
+                <a href="{{ path('app_subscription') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upgrade your subscription</a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
+            <h2 class="text-center text-2xl font-semibold text-gray-900">Last PDFs :</h2>
+            <ul class="mt-4 flex flex-wrap gap-6">
+                {% for pdf in pdf_titles %}
+                    <li class="bg-white shadow-md rounded-md p-4 mb-4">
+                        <p class="font-semibold">Title: {{ pdf.title }}</p>
+                        <embed src="{{ pdf.filepath }}" type="application/pdf" width="100%" height="600px" />
+                        <p class="text-gray-600">Created At: {{ pdf.createdAt|date('Y-m-d H:i:s') }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Calculate time remaining until tomorrow
+        function calculateTimeRemaining() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            const timeUntilTomorrow = tomorrow.getTime() - now.getTime();
+            return timeUntilTomorrow;
+        }
+
+        // Update countdown timer
+        function updateCountdown() {
+            const timeRemaining = calculateTimeRemaining();
+            const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = `Time remaining until tomorrow: ${hours}h ${minutes}m ${seconds}s`;
+
+            // Update countdown every second
+            setTimeout(updateCountdown, 1000);
+        }
+
+        // Start countdown when the page loads
+        updateCountdown();
+    </script>
+{% endblock %}

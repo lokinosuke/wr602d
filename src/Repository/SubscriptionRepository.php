@@ -21,6 +21,7 @@ class SubscriptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Subscription::class);
     }
 
+
 //    /**
 //     * @return Subscription[] Returns an array of Subscription objects
 //     */

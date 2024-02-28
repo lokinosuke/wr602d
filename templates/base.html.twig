@@ -4,13 +4,69 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/output.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+
+    </style>
+    
     {% endblock %}
-    {% block javascripts %}
-    {% endblock %}
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    {% block body %}
+<div class="min-h-screen bg-gray-900 text-white">
+{% if app.user %}
+    <nav class="flex items-center justify-between flex-wrap bg-gray-900 pt-6 px-6">
+        <div class="flex items-center flex-shrink-0 text-white">
+            <span class="font-semibold text-xl tracking-tight">PDF - MAKER</span>
+        </div>
+        <div class="block lg:hidden">
+            <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-white border-blue-400 hover:text-white hover:border-white">
+                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+            </button>
+        </div>
+        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden" id="nav-content">
+<div class="text-sm lg:flex-grow justify-center flex">
+    <a href="{{ path('app_home') }}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+        HOME
+    </a>
+    <a href="{{ path('app_gotenberg') }}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+        PDF.MAKER
+    </a>
+    <a href="{{ path('app_profile') }}" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white">
+        PROFILE
+    </a>
+</div>
 
-    {% endblock %}
+        </div>
+                    <div>
+                <a href="{{ path('app_logout') }}" class="flex items-center inline-block text-sm px-4 py-2 leading-none border rounded-full text-gray-900 bg-white border-white hover:border-transparent hover:text-blue-500 hover:bg-white mt-4 lg:mt-0">LOG OUT <ion-icon name="arrow-up-outline" class="text-2xl rotate-45"></ion-icon></a>
+            </div>
+    </nav>
+{% else %}
+    <nav class="flex items-center justify-between flex-wrap bg-gray-900 pt-6 px-6">
+        <div class="flex items-center flex-shrink-0 text-white">
+            <span class="font-semibold text-xl tracking-tight">PDF - MAKER</span>
+        </div>
+                    <div>
+                <a href="{{ path('app_login') }}" class="flex items-center inline-block text-sm px-4 py-2 leading-none border rounded-full text-gray-900 bg-white border-white hover:border-transparent hover:text-blue-500 hover:bg-white mt-4 lg:mt-0">LOG IN <ion-icon name="arrow-up-outline" class="text-2xl rotate-45"></ion-icon></a>
+            </div>
+    </nav>
+{% endif %}
+<div class="p-6">
+{% block body %}
+
+{% endblock %}
+</div>
+</div>
+<script>
+    document.getElementById('nav-toggle').addEventListener('click', function() {
+        var navContent = document.getElementById('nav-content');
+        navContent.classList.toggle('hidden');
+    });
+</script>
+
 </body>
 </html>

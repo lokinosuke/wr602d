@@ -3,24 +3,45 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="min-h-[39rem] rounded-lg flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Register
+      </h2>
+    </div>
+    <form class="mt-8 space-y-6" method="POST">
+      {{ form_errors(registrationForm) }}
+      {{ form_start(registrationForm) }}
+      <input type="hidden" name="_token" value="{{ csrf_token('register') }}">
+      <div class="rounded-md shadow-sm -space-y-px">
+        <div class="text-gray-900">
+          {{ form_row(registrationForm.email, { 'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm', 'placeholder': 'Email address'} }) }}
+        </div>
+        <div class="text-gray-900">
+          {{ form_row(registrationForm.lastname, { 'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm', 'placeholder': 'Last name'} }) }}
+        </div>
+        <div class="text-gray-900">
+          {{ form_row(registrationForm.firstname, { 'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm', 'placeholder': 'First name'} }) }}
+        </div>
+        <div class="text-gray-900">
+          {{ form_row(registrationForm.plainPassword, { 'attr': {'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm', 'placeholder': 'Password'} }) }}
+        </div>
+        <div class="text-gray-900">
+          {{ form_row(registrationForm.agreeTerms, { 'label': 'Agree to terms', 'attr': {'class': 'mt-2'} }) }}
+        </div>
+      </div>
 
-    {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.firstname) }}
-
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-
-<p>Already have an account? <a href="{{ path('app_login') }}">Login</a></p>
-
+      <div>
+        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+          Register
+        </button>
+      </div>
+      {{ form_end(registrationForm) }}
+    </form>
+    <p class="text-center text-sm text-gray-600 mt-4">
+      Already have an account? <a href="{{ path('app_login') }}" class="font-medium text-gray-900 hover:text-gray-500">Login</a>
+    </p>
+  </div>
+</div>
 {% endblock %}
-
