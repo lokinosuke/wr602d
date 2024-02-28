@@ -18,6 +18,16 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+###< symfony/asset-mapper ###
+
+
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
