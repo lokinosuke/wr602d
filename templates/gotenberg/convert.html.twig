@@ -1,0 +1,15 @@
+{# templates/gotenberg/convert.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Convert PDF - Gotenberg{% endblock %}
+
+{% block body %}
+    <h1>PDF Conversion</h1>
+    {% if pdf_limit_exceeded %}
+        <p>Sorry, you have exceeded your daily PDF conversion limit.</p>
+    {% else %}
+        <p>You are allowed to convert PDFs today.</p>
+        {# Add your conversion form or any additional content here #}
+    {% endif %}
+{% endblock %}
