@@ -34,6 +34,9 @@ class ProfileController extends AbstractController
         // Check if the user has exceeded the PDF limit
         $pdfLimitExceeded = $pdfCountToday >= $pdfLimit;
 
+        // Get the titles of the PDFs made by the user
+        $pdfTitles = $this->pdfRepository->findTitlesByUser($user->getId());
+        
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
             'username' => $username,
@@ -41,6 +44,7 @@ class ProfileController extends AbstractController
             'pdf_count_today' => $pdfCountToday,
             'pdf_limit' => $pdfLimit,
             'pdf_limit_exceeded' => $pdfLimitExceeded,
+            'pdf_titles' => $pdfTitles,
         ]);
     }
 }
