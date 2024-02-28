@@ -1,37 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home!{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gray-100">
-    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Subscriptions</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for subscription in subscriptions %}
-            <div class="bg-white overflow-hidden shadow rounded-lg">
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ subscription.title }}</h2>
-                    <p class="text-gray-600 mb-4">{{ subscription.description }}</p>
-                    <p class="text-gray-600 mb-4">Price: ${{ subscription.price }}</p>
-                    <p class="text-gray-600 mb-4">Limits PDF: {{ subscription.limitsPdf }}</p>
-                    <img src="{{ subscription.media }}" alt="{{ subscription.title }}" class="w-full h-auto">
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        <button id="showForm" class="mt-6 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Change subscription</button>
-        <div id="subscriptionForm" class="mt-6" style="display: none;">
-            {{ form_start(form, {'attr': {'class': 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'}}) }}
-            {{ form_row(form.subs, {'attr': {'class': 'mb-4'}}) }}
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
-            {{ form_end(form) }}
-        </div>
+<div class="min-h-[39rem] bg-white rounded-lg flex">
+<div class="flex justify-center flex-col">
+<div class="flex justify-center flex-col">
+<h1 class="text-gray-900 text-6xl font-bold text-center">Convert any webpage into a PDF document effortlessly</h1>
+<p class="text-gray-900 text-lg font-semibold pt-4 text-center">Powered by Symfony and Gotenberg</p>
+</div>
+{% if app.user %}
+<div class="flex justify-center mt-10">
+    <a href="{{ path('app_subscription') }}" class="flex items-center inline-block text-sm px-4 py-2 leading-none border rounded-full text-white bg-gray-900 mr-2 border-white hover:border-transparent hover:bg-gray-800 mt-4 lg:mt-0">Upgrade Your Subscription <ion-icon name="arrow-up-outline" class="text-2xl rotate-45"></ion-icon></a>
+    <a href="{{ path('app_gotenberg') }}" class="flex items-center inline-block text-sm px-4 py-2 leading-none border rounded-full text-gray-900 bg-white ml-2 border-gray-900 hover:border-transparent hover:text-white hover:bg-gray-800 mt-4 lg:mt-0">Convert A New Pdf <ion-icon name="arrow-up-outline" class="text-2xl rotate-45"></ion-icon></a>
+</div>
+{% else %}
+<div class="flex justify-center mt-10">
+    <a href="{{ path('app_register') }}" class="flex items-center inline-block text-sm px-4 py-2 leading-none border rounded-full text-white bg-gray-900 mr-2 border-white hover:border-transparent hover:bg-gray-800 mt-4 lg:mt-0">Start Free Trial <ion-icon name="arrow-up-outline" class="text-2xl rotate-45"></ion-icon></a>
+    <a href="{{ path('app_login') }}" class="flex items-center inline-block text-sm px-4 py-2 leading-none border rounded-full text-gray-900 bg-white mr-2 border-gray-900 hover:border-transparent hover:text-white hover:bg-gray-800 mt-4 lg:mt-0">Log In <ion-icon name="arrow-up-outline" class="text-2xl rotate-45"></ion-icon></a>
+</div>
+{% endif %}
+</div>
     </div>
 </div>
-
-<script>
-    document.getElementById('showForm').addEventListener('click', function() {
-        document.getElementById('subscriptionForm').style.display = 'block';
-    });
-</script>
 {% endblock %}
