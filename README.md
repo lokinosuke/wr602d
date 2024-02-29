@@ -1,6 +1,6 @@
-# Project Name
+# wr602d
 
-A brief description of your Symfony project.
+Symfony / Gotenberg
 
 ## Installation
 
@@ -12,6 +12,8 @@ A brief description of your Symfony project.
 2. Install dependencies.
     ```bash
     composer install
+    composer update
+    php bin/console tailwind:build
     ```
 
 3. Configure the database connection in the `.env` file.
