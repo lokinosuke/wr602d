@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<style> 
+.active-subscription {
+    border: 1px solid #111827;
+}
+</style>
+<div class="max-h-[39rem] rounded-lg flex items-center flex-col justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Subscriptions</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for subscription in subscriptions %}
+            <form action="{{ path('update_subscription') }}" method="post">
+                <input type="hidden" name="subscription_id" value="{{ subscription.id }}">
+                <div class="bg-white overflow-hidden shadow rounded-lg flex flex-col {% if subscription.id == active_subscription.id %}active-subscription{% else %}inactive-subscription{% endif %}">
+                    <img src="{{ asset(subscription.media) }}" alt="{{ subscription.title }}" class="w-full h-auto">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ subscription.title }}</h2>
+                        <p class="text-gray-600 mb-4">{{ subscription.description }}</p>
+                        <p class="text-gray-600 mb-4">Price: ${{ subscription.price }}</p>
+                        <p class="text-gray-600 mb-4">Limits PDF: {{ subscription.limitsPdf }}</p>
+                    </div>
+                    <button type="submit" class="text-gray-900 text-center mb-6 mx-4 bg-gray-900 text-white flex items-center justify-center text-sm px-12 py-4 leading-none border rounded-full" name="submit_button">{{ subscription.id == active_subscription.id ? 'Active Subscription' : 'Choose This Subscription' }}</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -3,18 +3,18 @@
 {% block title %}Profile{% endblock %}
 
 {% block body %}
-    <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+<div class="min-h-[39rem] rounded-lg flex items-center flex-col justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <h2 class="text-center text-3xl font-extrabold text-gray-900">
-                Profile
+                Profil
             </h2>
         </div>
-        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div class="bg-white p-8 shadow sm:rounded-lg">
-                <p class="mb-4">Welcome, {{ username }}</p>
-                <p class="mb-4">Your subscription: {{ subscription_title }}</p>
-                <p class="mb-4">Number of PDFs generated today: {{ pdf_count_today }}</p>
-                <p class="mb-4">PDF generation limit: {{ pdf_limit }}</p>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white p-8 shadow rounded-lg">
+                <p class="mb-4 text-gray-900">Welcome, <span class="font-bold">{{ username }}</span></p>
+                <p class="mb-4 text-gray-900">Your subscription: <span class="font-bold">{{ subscription_title }}</span></p>
+                <p class="mb-4 text-gray-900">Number of PDFs generated today: <span class="font-bold">{{ pdf_count_today }}</span></p>
+                <p class="mb-4 text-gray-900">PDF generation limit: <span class="font-bold">{{ pdf_limit }}</span></p>
                 {% if pdf_limit_exceeded %}
                     <p class="mt-4 text-sm text-red-600">You have exceeded your PDF generation limit for today. Please upgrade your subscription or try again tomorrow.</p>
                     {# You can also disable PDF generation functionality here if needed #}
@@ -23,8 +23,20 @@
                 {% endif %}
                 <div id="countdown" class="mt-4 text-sm text-gray-700"></div>
                 <br> {# Add a line break here #}
-                <a href="{{ path('app_home') }}" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upgrade your subscription</a>
+                <a href="{{ path('app_subscription') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upgrade your subscription</a>
             </div>
+        </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
+            <h2 class="text-center text-2xl font-semibold text-gray-900">Last PDFs :</h2>
+            <ul class="mt-4 flex flex-wrap gap-6">
+                {% for pdf in pdf_titles %}
+                    <li class="bg-white shadow-md rounded-md p-4 mb-4">
+                        <p class="font-semibold">Title: {{ pdf.title }}</p>
+                        <embed src="{{ pdf.filepath }}" type="application/pdf" width="100%" height="600px" />
+                        <p class="text-gray-600">Created At: {{ pdf.createdAt|date('Y-m-d H:i:s') }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 

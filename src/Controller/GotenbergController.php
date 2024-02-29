@@ -59,7 +59,6 @@ class GotenbergController extends AbstractController
         $entityManager->persist($pdf);
         $entityManager->flush();
 
-        return $this->file($filepath);
+        return $this->redirectToRoute('app_profile');
 }
 }
-
